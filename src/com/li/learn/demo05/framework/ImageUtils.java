@@ -31,8 +31,6 @@ public class ImageUtils {
         options.inSampleSize = inSampleSize;
         options.inJustDecodeBounds = false;
         Bitmap srcBitmap = BitmapFactory.decodeFile(path, options);
-        System.out.println("---------------------src bitmap == null" + (srcBitmap == null));
-        System.out.println("---------------------src bitmap width " + (srcBitmap.getWidth()));
         return rotateRight(path, srcBitmap);
     }
 

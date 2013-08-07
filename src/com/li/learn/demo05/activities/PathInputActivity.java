@@ -54,7 +54,7 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
 
     private void initLocationFinder() {
         LocationFinder locationFinder = BeanContext.getInstance().getBean(LocationFinder.class);
-        locationFinder.addReceiveLocationCallback(this);
+        locationFinder.registerReceiveLocationCallback(this);
     }
 
     private void initUI() {

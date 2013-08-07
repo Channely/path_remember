@@ -11,7 +11,6 @@ public class LocationFinder {
 
     private final LocationClient locationClient;
     private ReceiveLocationCallback receiveLocationCallback;
-    private BDLocationListener bdLocationListener;
 
     public LocationFinder(Context appContext) {
         locationClient = new LocationClient(appContext);
@@ -19,12 +18,7 @@ public class LocationFinder {
     }
 
     private void initClient() {
-        bdLocationListener = createLocationListener();
-        locationClient.registerLocationListener(bdLocationListener);
-    }
-
-    private BDLocationListener createLocationListener() {
-        return new BDLocationListener() {
+        locationClient.registerLocationListener(new BDLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 String addrStr = bdLocation.getAddrStr();
@@ -38,15 +32,15 @@ public class LocationFinder {
             public void onReceivePoi(BDLocation bdLocation) {
                 Log.d("location onReceivePoi:", bdLocation.getAddrStr());
             }
-        };
+        });
     }
 
-    public void addReceiveLocationCallback(ReceiveLocationCallback receiveLocationCallback) {
+    public void registerReceiveLocationCallback(ReceiveLocationCallback receiveLocationCallback) {
         this.receiveLocationCallback = receiveLocationCallback;
     }
 
     public void destroy() {
-        locationClient.unRegisterLocationListener(bdLocationListener);
+        receiveLocationCallback = null;
         if (locationClient.isStarted()) {
             locationClient.stop();
         }
