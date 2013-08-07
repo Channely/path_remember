@@ -1,115 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:paddingLeft="18dp" android:paddingRight="18dp" android:paddingTop="15dp"
-              android:background="@drawable/main_background">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="18dp" android:paddingRight="18dp" android:paddingTop="18dp"
+            android:background="@drawable/main_background">
+    <LinearLayout android:orientation="vertical"
+                  android:layout_height="fill_parent"
+                  android:layout_width="fill_parent">
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
-                  android:orientation="vertical">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:layout_marginBottom="5dp"
+                      android:orientation="vertical">
 
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content"
-                  android:text="@string/label_path_item_category" android:textSize="14sp"
-                  android:textStyle="bold" android:paddingLeft="1dp"
-                  android:typeface="sans" android:layout_marginBottom="2dp"
-                  android:textColor="@color/black"/>
+            <TextView android:layout_height="wrap_content" android:layout_width="wrap_content"
+                      android:text="@string/label_path_item_title" android:textSize="14sp"
+                      android:textStyle="bold" android:paddingLeft="1dp"
+                      android:typeface="sans" android:layout_marginBottom="4dp"
+                      android:textColor="@color/black"/>
 
-        <RelativeLayout android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+            <RelativeLayout android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
 
-            <Spinner android:entries="@array/path_item_categories"
-                     android:layout_width="120dp"
-                     android:layout_height="44dp"
-                     android:layout_alignParentLeft="true"
-                     android:id="@+id/spinner_path_item_category" android:layout_gravity="center"/>
-            <EditText android:id="@+id/edit_text_path_item_category_details"
+                <Spinner android:entries="@array/path_item_categories"
+                         android:layout_width="120dp"
+                         android:layout_height="44dp"
+                         android:layout_alignParentLeft="true"
+                         android:id="@+id/spinner_path_item_category" android:layout_gravity="center"/>
+                <EditText android:id="@+id/edit_text_path_item_category_details"
+                          android:layout_width="fill_parent" android:layout_height="43sp"
+                          android:singleLine="true" android:textSize="12sp"
+                          android:layout_toRightOf="@id/spinner_path_item_category"
+                          android:inputType="text"
+                          android:typeface="sans"
+                          android:background="@drawable/edit_text_selector"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_marginBottom="10dp">
+            <TextView android:layout_height="20dp" android:layout_width="wrap_content"
+                      android:text="@string/label_path_item_bus" android:textSize="14sp"
+                      android:typeface="sans" android:layout_marginBottom="4dp"
+                      android:textColor="@color/black" android:paddingLeft="1dp"/>
+            <EditText android:id="@+id/path_item_bus"
                       android:layout_width="fill_parent" android:layout_height="43sp"
-                      android:singleLine="true" android:textSize="12sp"
-                      android:layout_toRightOf="@id/spinner_path_item_category"
+                      android:singleLine="true" android:textSize="14sp"
                       android:inputType="text"
                       android:typeface="sans"
                       android:background="@drawable/edit_text_selector"/>
+        </LinearLayout>
 
-        </RelativeLayout>
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_marginBottom="10dp">
+            <TextView android:layout_height="20dp" android:layout_width="wrap_content"
+                      android:text="@string/label_path_item_location" android:textSize="14sp"
+                      android:typeface="sans"
+                      android:layout_marginBottom="4dp"
+                      android:textColor="@color/black" android:paddingLeft="1dp"/>
+            <com.li.learn.demo05.domain.LocationView android:id="@+id/loc_view"
+                                                     android:layout_width="fill_parent"
+                                                     android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_start_camera"
+                    android:layout_width="0dp" android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="拍照"
+                    android:typeface="sans"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:shadowDx="0"
+                    android:shadowDy="-1"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="0.75"
+                    android:background="@drawable/button_selector"
+                    android:layout_marginBottom="10dp"/>
+
+            <Button android:id="@+id/btn_save_path"
+                    android:layout_width="0dp" android:layout_height="44dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="保存"
+                    android:layout_weight="1"
+                    android:typeface="sans"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:shadowDx="0"
+                    android:shadowDy="-1"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="0.75"
+                    android:background="@drawable/button_selector"/>
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_marginBottom="10dp">
-        <TextView android:layout_height="20dp" android:layout_width="wrap_content"
-                  android:text="@string/label_path_item_bus" android:textSize="14sp"
-                  android:typeface="sans"
-                  android:textColor="@color/black" android:paddingLeft="1dp"/>
-        <EditText android:id="@+id/path_item_bus"
-                  android:layout_width="fill_parent" android:layout_height="43sp"
-                  android:singleLine="true" android:textSize="14sp"
-                  android:inputType="text"
-                  android:typeface="sans"
-                  android:background="@drawable/edit_text_selector"/>
-    </LinearLayout>
-
-
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_marginBottom="10dp">
-        <TextView android:layout_height="20dp" android:layout_width="wrap_content"
-                  android:text="@string/label_path_item_location" android:textSize="14sp"
-                  android:typeface="sans"
-                  android:textColor="@color/black" android:paddingLeft="1dp"/>
-        <EditText android:id="@+id/path_item_location"
-                  android:layout_width="fill_parent" android:layout_height="43sp"
-                  android:singleLine="true" android:textSize="14sp"
-                  android:inputType="text"
-                  android:typeface="sans"
-                  android:background="@drawable/edit_text_selector"/>
-    </LinearLayout>
-
-    <com.li.learn.demo05.domain.LocationView android:id="@+id/loc_view"
-                                             android:layout_width="fill_parent"
-                                             android:layout_height="wrap_content"/>
-
-    <Button android:id="@+id/btn_start_camera"
-            android:layout_width="fill_parent" android:layout_height="44dp"
-            android:text="Start Camera"
-            android:typeface="sans"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:shadowDx="0"
-            android:shadowDy="-1"
-            android:shadowColor="@color/black"
-            android:shadowRadius="0.75"
-            android:background="@drawable/button_selector"
-            android:layout_marginBottom="10dp"/>
-    <Button android:id="@+id/btn_save_path"
-            android:layout_width="fill_parent" android:layout_height="44dp"
-            android:layout_marginBottom="10dp"
-            android:text="Save"
-            android:typeface="sans"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:shadowDx="0"
-            android:shadowDy="-1"
-            android:shadowColor="@color/black"
-            android:shadowRadius="0.75"
-            android:background="@drawable/button_selector"/>
-
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:layout_marginTop="10dp">
-        <TextView android:layout_height="20dp" android:layout_width="wrap_content"
-                  android:text="Thumbnail:" android:textSize="14sp"
-                  android:typeface="sans"
-                  android:textColor="@color/black" android:paddingLeft="1dp"/>
-        <ImageView android:id="@+id/image_view_path_thumbnail" android:layout_width="fill_parent"
-                   android:layout_marginLeft="10dp"
-                   android:scaleType="fitEnd"
-                   android:adjustViewBounds="true"
-                   android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
 

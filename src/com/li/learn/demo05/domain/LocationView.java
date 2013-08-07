@@ -1,6 +1,7 @@
 package com.li.learn.demo05.domain;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +77,13 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
 
 
     @Override
-    public void receiveLocation(String location) {
-        locAutoTextView.setText(location);
+    public void receiveLocation(final String location) {
+        Handler handler = getHandler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                locAutoTextView.setText(location);
+            }
+        });
     }
 }

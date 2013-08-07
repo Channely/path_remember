@@ -6,7 +6,9 @@
               android:layout_height="match_parent">
 
     <RelativeLayout android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp">
+
         <CheckBox android:id="@+id/checkbox_priority"
                   android:layout_width="wrap_content"
                   android:layout_height="40dp"
@@ -36,22 +38,24 @@
                   android:orientation="vertical"
                   android:layout_marginBottom="10dp">
         <TextView android:layout_height="20dp" android:layout_width="wrap_content"
-                  android:text="地址：" android:textSize="14sp"
+                  android:text="自动解析的结果：" android:textSize="14sp"
                   android:typeface="sans"
+                  android:layout_marginBottom="4dp"
                   android:textColor="@color/black" android:paddingLeft="1dp"/>
         <TextView android:id="@+id/loc_auto_result"
                   android:layout_width="fill_parent" android:layout_height="43sp"
-                  android:singleLine="true" android:textSize="14sp"
-                  android:inputType="text"
+                  android:textSize="14sp"
+                  android:textColor="@color/black"
                   android:typeface="sans"
-                  android:background="@drawable/edit_text_selector"/>
+                  android:background="#bebebe"/>
     </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:layout_marginBottom="10dp">
         <TextView android:layout_height="20dp" android:layout_width="wrap_content"
-                  android:text="修正：" android:textSize="14sp"
+                  android:text="输入修正信息：" android:textSize="14sp"
+                  android:layout_marginBottom="4dp"
                   android:typeface="sans"
                   android:textColor="@color/black" android:paddingLeft="1dp"/>
         <EditText android:id="@+id/loc_revise_result"

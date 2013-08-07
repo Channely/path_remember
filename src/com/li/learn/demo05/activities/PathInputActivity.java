@@ -9,8 +9,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 import com.li.learn.demo05.R;
 import com.li.learn.demo05.domain.LocationFinder;
@@ -30,10 +28,8 @@ public class PathInputActivity extends Activity {
     private static final String JPEG_FILE_SUFFIX = ".jpeg";
 
     private File albumDir;
-    private ImageView imageView;
     private Button startCameraBtn;
     private PathItem currentPathItem;
-    private EditText whereEditText;
     private Button saveBtn;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -66,12 +62,9 @@ public class PathInputActivity extends Activity {
                 }
             }
         });
-        imageView = (ImageView) findViewById(R.id.image_view_path_thumbnail);
-        whereEditText = (EditText) findViewById(R.id.path_item_location);
     }
 
     private void savePathItem() {
-        currentPathItem.setDescription(whereEditText.getText().toString());
         if (currentPathItem.save()) {
             Toast.makeText(this, "save success", Toast.LENGTH_SHORT);
         } else {
@@ -115,7 +108,6 @@ public class PathInputActivity extends Activity {
         if (requestCode == CODE_TAKEN_PHOTO) {
             Bitmap thumbnailBitmap = ImageUtils.decodeBitmapFromFile(currentPathItem.getFullImagePath(), 250, 250);
             ImageUtils.saveBitmap(currentPathItem.getThumbnailImagePath(), thumbnailBitmap);
-            imageView.setImageBitmap(thumbnailBitmap);
         }
     }
 
