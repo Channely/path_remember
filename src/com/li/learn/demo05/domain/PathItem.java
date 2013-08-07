@@ -2,11 +2,23 @@ package com.li.learn.demo05.domain;
 
 import com.li.learn.demo05.framework.BeanContext;
 
-public class PathItem {
+import java.io.Serializable;
+
+import static com.li.learn.demo05.framework.ImageUtils.decodeBitmapFromFile;
+import static com.li.learn.demo05.framework.ImageUtils.saveBitmap;
+
+public class PathItem implements Serializable {
 
     private String fullImagePath;
     private String thumbnailImagePath;
-    private String description;
+    private String category;
+    private String title;
+    private String bus;
+    private String autoLocation;
+    private String revisedLocation;
+
+    public PathItem() {
+    }
 
     public PathItem(String fullImagePath, String thumbnailImagePath) {
         this.fullImagePath = fullImagePath;
@@ -22,16 +34,59 @@ public class PathItem {
         return thumbnailImagePath;
     }
 
-    public String getDescription() {
-        return description;
+    public void setFullImagePath(String fullImagePath) {
+        this.fullImagePath = fullImagePath;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setThumbnailImagePath(String thumbnailImagePath) {
+        this.thumbnailImagePath = thumbnailImagePath;
+    }
+
+    public String getCategory() {
+
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBus() {
+        return bus;
+    }
+
+    public void setBus(String bus) {
+        this.bus = bus;
+    }
+
+    public String getAutoLocation() {
+        return autoLocation;
+    }
+
+    public void setAutoLocation(String autoLocation) {
+        this.autoLocation = autoLocation;
+    }
+
+    public String getRevisedLocation() {
+        return revisedLocation;
+    }
+
+    public void setRevisedLocation(String revisedLocation) {
+        this.revisedLocation = revisedLocation;
     }
 
     public boolean save() {
-        return getPathItemDBOperator().savePathItem(this) >= 0;
+        final boolean saveThumbnailResult = saveBitmap(getThumbnailImagePath(),
+                decodeBitmapFromFile(getFullImagePath(), 250, 250));
+        return saveThumbnailResult && getPathItemDBOperator().savePathItem(this) >= 0;
     }
 
 

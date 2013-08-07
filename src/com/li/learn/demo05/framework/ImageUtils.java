@@ -30,7 +30,10 @@ public class ImageUtils {
         }
         options.inSampleSize = inSampleSize;
         options.inJustDecodeBounds = false;
-        return rotateRight(path, BitmapFactory.decodeFile(path, options));
+        Bitmap srcBitmap = BitmapFactory.decodeFile(path, options);
+        System.out.println("---------------------src bitmap == null" + (srcBitmap == null));
+        System.out.println("---------------------src bitmap width " + (srcBitmap.getWidth()));
+        return rotateRight(path, srcBitmap);
     }
 
     public static Bitmap rotateRight(String path, Bitmap srcBitmap) {
@@ -52,20 +55,22 @@ public class ImageUtils {
         return Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), matrix, true);
     }
 
-    public static void saveBitmap(String path, Bitmap bitmap) {
-            File file = new File(path);
-            if (file.exists()) {
-                Log.w("Save Bitmap", "when save bitmap, file:" + path + " is already there");
-                return;
-            }
-            try {
-                FileOutputStream out = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("Save Bitmap", e.toString());
-            }
+    public static boolean saveBitmap(String path, Bitmap bitmap) {
+        File file = new File(path);
+        if (file.exists()) {
+            Log.w("Save Bitmap", "when save bitmap, file:" + path + " is already there");
+            return false;
         }
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("Save Bitmap", e.toString());
+        }
+        return false;
+    }
 }

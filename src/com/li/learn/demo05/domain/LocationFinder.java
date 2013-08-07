@@ -53,4 +53,8 @@ public class LocationFinder {
     public void start() {
         locationClient.start();
     }
+
+    public boolean isStarted() {
+        return locationClient.isStarted();
+    }
 }

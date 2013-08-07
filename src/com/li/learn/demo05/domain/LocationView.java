@@ -19,7 +19,6 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
     private CheckBox gpsCheckbox;
     private Button startLocBtn;
     private LocationFinder locationFinder;
-    private boolean isLocStart;
     private TextView locAutoTextView;
 
     public LocationView(Context context, AttributeSet attrs) {
@@ -51,10 +50,9 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
     }
 
     private void startLoc() {
-        if (isLocStart) return;
+        locationFinder.stop();
         locationFinder.setLocOption(getLocOption());
         locationFinder.start();
-        isLocStart = true;
     }
 
     private LocationClientOption getLocOption() {
@@ -86,4 +84,11 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
             }
         });
     }
+
+    public void restore(String autoLocation) {
+        locationFinder.addReceiveLocationCallback(this);
+        locAutoTextView.setText(autoLocation);
+    }
+
+
 }

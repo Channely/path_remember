@@ -2,7 +2,6 @@ package com.li.learn.demo05.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,9 +11,9 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.li.learn.demo05.R;
 import com.li.learn.demo05.domain.LocationFinder;
+import com.li.learn.demo05.domain.LocationView;
 import com.li.learn.demo05.domain.PathItem;
 import com.li.learn.demo05.framework.BeanContext;
-import com.li.learn.demo05.framework.ImageUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +30,7 @@ public class PathInputActivity extends Activity {
     private Button startCameraBtn;
     private PathItem currentPathItem;
     private Button saveBtn;
+    private LocationView locationView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +40,20 @@ public class PathInputActivity extends Activity {
         initCurrentPathItem();
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        locationView.restore(currentPathItem.getAutoLocation());
+
+    }
 
     private void initUI() {
         startCameraBtn = (Button) findViewById(R.id.btn_start_camera);
         startCameraBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                deleteOldImage();
                 try {
-                    if (currentPathItem != null) {
-                        startCamera();
-                    }
+                    startCamera();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -57,18 +62,22 @@ public class PathInputActivity extends Activity {
         saveBtn = (Button) findViewById(R.id.btn_save_path);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (currentPathItem != null) {
-                    savePathItem();
-                }
+                savePathItem();
             }
         });
+        locationView = (LocationView) findViewById(R.id.loc_view);
+    }
+
+    private void deleteOldImage() {
+        File fullImageFile = new File(currentPathItem.getFullImagePath());
+        fullImageFile.deleteOnExit();
     }
 
     private void savePathItem() {
         if (currentPathItem.save()) {
-            Toast.makeText(this, "save success", Toast.LENGTH_SHORT);
+            showTip("保存成功");
         } else {
-            Toast.makeText(this, "save fail", Toast.LENGTH_SHORT);
+            showTip("保存失败");
         }
     }
 
@@ -106,10 +115,26 @@ public class PathInputActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
         if (requestCode == CODE_TAKEN_PHOTO) {
-            Bitmap thumbnailBitmap = ImageUtils.decodeBitmapFromFile(currentPathItem.getFullImagePath(), 250, 250);
-            ImageUtils.saveBitmap(currentPathItem.getThumbnailImagePath(), thumbnailBitmap);
+            handleImageTaken();
         }
     }
+
+    private void handleImageTaken() {
+        if (!imageTakenSuccess()) {
+            showTip("拍照没有成功！");
+            return;
+        }
+        showTip("拍照成功！");
+    }
+
+    private void showTip(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean imageTakenSuccess() {
+        return new File(currentPathItem.getFullImagePath()).exists();
+    }
+
 
     @Override
     protected void onDestroy() {

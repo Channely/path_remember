@@ -11,9 +11,13 @@ public class PathItemDBOperator extends SQLiteOpenHelper {
     private static final String PATH_ITEMS_TABLE_NAME = "path_items";
     private static final int DB_VERSION = 1;
 
-    private static final String DESCRIPTION_COLUMN = "description";
     private static final String FULL_IMAGE_PATH_COLUMN = "full_image_path";
     private static final String THUMBNAIL_IMAGE_PATH_COLUMN = "thumbnail_image_path";
+    private static final String CATEGORY_COLUMN = "category";
+    private static final String TITLE_COLUMN = "title";
+    private static final String BUS_COLUMN = "bus";
+    private static final String AUTO_LOCATION_COLUMN = "auto_location";
+    private static final String REVISED_LOCATION = "revised_location";
 
 
     public PathItemDBOperator(Context context) {
@@ -29,7 +33,11 @@ public class PathItemDBOperator extends SQLiteOpenHelper {
         StringBuilder builder = new StringBuilder();
         builder.append("Create table ").append(PATH_ITEMS_TABLE_NAME).append("(")
                 .append("id").append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
-                .append(DESCRIPTION_COLUMN).append(" TEXT, ")
+                .append(CATEGORY_COLUMN).append(" TEXT, ")
+                .append(TITLE_COLUMN).append(" TEXT, ")
+                .append(BUS_COLUMN).append(" TEXT, ")
+                .append(AUTO_LOCATION_COLUMN).append(" TEXT, ")
+                .append(REVISED_LOCATION).append(" TEXT, ")
                 .append(FULL_IMAGE_PATH_COLUMN).append(" TEXT, ")
                 .append(THUMBNAIL_IMAGE_PATH_COLUMN).append(" TEXT")
                 .append(");");
@@ -43,7 +51,11 @@ public class PathItemDBOperator extends SQLiteOpenHelper {
 
     public long savePathItem(PathItem pathItem) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DESCRIPTION_COLUMN, pathItem.getDescription());
+        contentValues.put(CATEGORY_COLUMN, pathItem.getCategory());
+        contentValues.put(TITLE_COLUMN, pathItem.getTitle());
+        contentValues.put(BUS_COLUMN, pathItem.getBus());
+        contentValues.put(AUTO_LOCATION_COLUMN, pathItem.getAutoLocation());
+        contentValues.put(REVISED_LOCATION, pathItem.getRevisedLocation());
         contentValues.put(FULL_IMAGE_PATH_COLUMN, pathItem.getFullImagePath());
         contentValues.put(THUMBNAIL_IMAGE_PATH_COLUMN, pathItem.getThumbnailImagePath());
         return getWritableDatabase().insert(PATH_ITEMS_TABLE_NAME, null, contentValues);
