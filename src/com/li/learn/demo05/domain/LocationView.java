@@ -80,6 +80,10 @@ public class LocationView extends LinearLayout {
     }
 
 
+    public void setRevisedLocation(String location) {
+        locRevisedEditText.setText(location);
+    }
+
     public String getAutoLocation() {
         return locAutoTextView.getText().toString();
     }

@@ -13,6 +13,7 @@ public class PathItem implements Serializable {
     private String fullImagePath;
     private String thumbnailImagePath;
     private String category;
+    private int selectedCategoryPosition;
     private String title;
     private String bus;
     private String autoLocation;
@@ -100,5 +101,14 @@ public class PathItem implements Serializable {
     private PathItemDBOperator getPathItemDBOperator() {
         BeanContext beanContext = BeanContext.getInstance();
         return beanContext.getBean(PathItemDBOperator.class);
+    }
+
+
+    public int getSelectedCategoryPosition() {
+        return selectedCategoryPosition;
+    }
+
+    public void setSelectedCategoryPosition(int selectedCategoryPosition) {
+        this.selectedCategoryPosition = selectedCategoryPosition;
     }
 }

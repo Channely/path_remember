@@ -4,6 +4,7 @@ import android.app.Application;
 import com.li.learn.demo05.domain.LocationFinder;
 import com.li.learn.demo05.domain.PathItemDBOperator;
 import com.li.learn.demo05.framework.BeanContext;
+import com.li.learn.demo05.framework.SerialPersistence;
 
 public class PathApp extends Application {
 
@@ -17,6 +18,7 @@ public class PathApp extends Application {
         BeanContext beanContext = BeanContext.getInstance();
         beanContext.putBean(PathItemDBOperator.class, new PathItemDBOperator(this));
         beanContext.putBean(LocationFinder.class, new LocationFinder(this));
+        beanContext.putBean(SerialPersistence.class, new SerialPersistence(this));
     }
 
 }

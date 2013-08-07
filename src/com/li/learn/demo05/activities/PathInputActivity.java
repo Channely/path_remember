@@ -17,6 +17,7 @@ import com.li.learn.demo05.domain.LocationView;
 import com.li.learn.demo05.domain.PathItem;
 import com.li.learn.demo05.domain.ReceiveLocationCallback;
 import com.li.learn.demo05.framework.BeanContext;
+import com.li.learn.demo05.framework.SerialPersistence;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     private static final String ALBUM_NAME = "demo05";
     private static final String JPEG_FILE_PREFIX = "demo05_";
     private static final String JPEG_FILE_SUFFIX = ".jpeg";
+    public static final String HISTORY_STATES_PREFERENCE = "history_state";
 
     private File albumDir;
     private Button startCameraBtn;
@@ -41,7 +43,7 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.path_input_layout);
-
+        initUI();
     }
 
     @Override
@@ -50,15 +52,34 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
         initAlbumDir();
         initPathItem(savedInstanceState);
         initLocationFinder();
-        initUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SerialPersistence serialPersistence = BeanContext.getInstance().getBean(SerialPersistence.class);
+        PathItem pathItem = serialPersistence.readSerialObject(HISTORY_STATES_PREFERENCE);
+        if (pathItem != null) {
+            currentPathItem = pathItem;
+            restorePathItemToUI();
+        }
     }
 
     private void initPathItem(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey("path_item")) {
             currentPathItem = (PathItem) savedInstanceState.getSerializable("path_item");
+            restorePathItemToUI();
             return;
         }
         currentPathItem = createPathItem();
+    }
+
+    private void restorePathItemToUI() {
+        categorySpinner.setSelection(currentPathItem.getSelectedCategoryPosition());
+        titleTextView.setText(currentPathItem.getTitle());
+        busTextView.setText(currentPathItem.getBus());
+        locationView.setAutoLocation(currentPathItem.getAutoLocation());
+        locationView.setRevisedLocation(currentPathItem.getRevisedLocation());
     }
 
     private void initLocationFinder() {
@@ -70,9 +91,7 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
         categorySpinner = (Spinner) findViewById(R.id.spinner_path_item_category);
         titleTextView = (EditText) findViewById(R.id.edit_text_path_item_category_details);
         busTextView = (EditText) findViewById(R.id.path_item_bus);
-
         locationView = (LocationView) findViewById(R.id.loc_view);
-        locationView.setAutoLocation(currentPathItem.getAutoLocation());
 
         startCameraBtn = (Button) findViewById(R.id.btn_start_camera);
         startCameraBtn.setOnClickListener(new View.OnClickListener() {
@@ -99,17 +118,21 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     }
 
     private void savePathItem() {
-        currentPathItem.setCategory((String) categorySpinner.getSelectedItem());
-        currentPathItem.setTitle(titleTextView.getText().toString());
-        currentPathItem.setBus(busTextView.getText().toString());
-        currentPathItem.setAutoLocation(locationView.getAutoLocation());
-        currentPathItem.setRevisedLocation(locationView.getRevisedLocation());
-
+        fetchPathItemData();
         if (currentPathItem.save()) {
             showTip("保存成功");
         } else {
             showTip("保存失败");
         }
+    }
+
+    private void fetchPathItemData() {
+        currentPathItem.setCategory((String) categorySpinner.getSelectedItem());
+        currentPathItem.setSelectedCategoryPosition(categorySpinner.getSelectedItemPosition());
+        currentPathItem.setTitle(titleTextView.getText().toString());
+        currentPathItem.setBus(busTextView.getText().toString());
+        currentPathItem.setAutoLocation(locationView.getAutoLocation());
+        currentPathItem.setRevisedLocation(locationView.getRevisedLocation());
     }
 
     private void initAlbumDir() {
@@ -188,6 +211,8 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     @Override
     protected void onPause() {
         super.onPause();
-
+        fetchPathItemData();
+        SerialPersistence serialPersistence = BeanContext.getInstance().getBean(SerialPersistence.class);
+        serialPersistence.saveSerialObject(HISTORY_STATES_PREFERENCE, currentPathItem);
     }
 }
