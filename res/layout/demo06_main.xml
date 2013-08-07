@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:paddingLeft="25dp" android:paddingRight="25dp" android:paddingTop="20dp"
+              android:background="@drawable/main_background">
+
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_marginBottom="10dp">
+        <TextView android:layout_height="20dp" android:layout_width="wrap_content"
+                  android:text="Description:" android:textSize="14sp"
+                  android:typeface="sans"
+                  android:textColor="@color/black" android:paddingLeft="1dp"/>
+        <EditText android:id="@+id/demo06_where"
+                  android:layout_width="fill_parent" android:layout_height="88dp"
+                  android:singleLine="false" android:textSize="14sp"
+                  android:inputType="text"
+                  android:typeface="sans"
+                  android:gravity="top"
+                  android:background="@drawable/edit_text_selector"/>
+    </LinearLayout>
+
+    <Button android:id="@+id/demo06_camera_start_btn"
+            android:layout_width="fill_parent" android:layout_height="44dp"
+            android:text="Start Camera"
+            android:typeface="sans"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:shadowDx="0"
+            android:shadowDy="-1"
+            android:shadowColor="@color/black"
+            android:shadowRadius="0.75"
+            android:background="@drawable/button_selector"
+            android:layout_marginBottom="10px"/>
+    <Button android:id="@+id/demo06_save_btn"
+            android:layout_width="fill_parent" android:layout_height="44dp"
+            android:layout_marginBottom="10px"
+            android:text="Save"
+            android:typeface="sans"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:shadowDx="0"
+            android:shadowDy="-1"
+            android:shadowColor="@color/black"
+            android:shadowRadius="0.75"
+            android:background="@drawable/button_selector"/>
+
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="10dp">
+        <TextView android:layout_height="20dp" android:layout_width="wrap_content"
+                  android:text="Thumbnail:" android:textSize="14sp"
+                  android:typeface="sans"
+                  android:textColor="@color/black" android:paddingLeft="1dp"/>
+        <ImageView android:id="@+id/demo06_image_view" android:layout_width="fill_parent"
+                   android:layout_marginLeft="10dp"
+                   android:scaleType="fitEnd"
+                   android:adjustViewBounds="true"
+                   android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
+
