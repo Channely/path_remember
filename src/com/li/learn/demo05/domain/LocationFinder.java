@@ -22,10 +22,12 @@ public class LocationFinder {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 String addrStr = bdLocation.getAddrStr();
-                if (receiveLocationCallback != null) {
+                if (receiveLocationCallback == null) return;
+                if (addrStr == null) {
+                    receiveLocationCallback.fetchLocationError("无法定位当前地址");
+                } else {
                     receiveLocationCallback.receiveLocation(addrStr);
                 }
-                Log.d("location", addrStr);
             }
 
             @Override
@@ -61,6 +63,4 @@ public class LocationFinder {
     public boolean isStarted() {
         return locationClient.isStarted();
     }
-
-
 }

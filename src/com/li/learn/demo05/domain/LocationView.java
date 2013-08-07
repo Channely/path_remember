@@ -4,10 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.baidu.location.LocationClientOption;
 import com.li.learn.demo05.R;
 import com.li.learn.demo05.framework.BeanContext;
@@ -18,6 +15,7 @@ public class LocationView extends LinearLayout {
     private Button startLocBtn;
     private LocationFinder locationFinder;
     private TextView locAutoTextView;
+    private EditText locRevisedEditText;
 
     public LocationView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,6 +36,7 @@ public class LocationView extends LinearLayout {
         gpsCheckbox = (CheckBox) findViewById(R.id.checkbox_gps);
         startLocBtn = (Button) findViewById(R.id.btn_begin_loc);
         locAutoTextView = (TextView) findViewById(R.id.loc_auto_result);
+        locRevisedEditText = (EditText) findViewById(R.id.loc_revise_result);
         startLocBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,4 +80,11 @@ public class LocationView extends LinearLayout {
     }
 
 
+    public String getAutoLocation() {
+        return locAutoTextView.getText().toString();
+    }
+
+    public String getRevisedLocation() {
+        return locRevisedEditText.getText().toString();
+    }
 }

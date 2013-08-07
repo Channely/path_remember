@@ -8,6 +8,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.li.learn.demo05.R;
 import com.li.learn.demo05.domain.LocationFinder;
@@ -32,24 +34,31 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     private PathItem currentPathItem;
     private Button saveBtn;
     private LocationView locationView;
+    private Spinner categorySpinner;
+    private EditText titleTextView;
+    private EditText busTextView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.path_input_layout);
-        initUI();
-        initAlbumDir();
-        initCurrentPathItem();
-        initLocationFinder();
+
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        PathItem savedPathItem = (PathItem) savedInstanceState.getSerializable("path_item");
-        if (savedPathItem != null) {
-            currentPathItem = savedPathItem;
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        initAlbumDir();
+        initPathItem(savedInstanceState);
+        initLocationFinder();
+        initUI();
+    }
+
+    private void initPathItem(Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey("path_item")) {
+            currentPathItem = (PathItem) savedInstanceState.getSerializable("path_item");
+            return;
         }
-        locationView.setAutoLocation(currentPathItem.getAutoLocation());
+        currentPathItem = createPathItem();
     }
 
     private void initLocationFinder() {
@@ -58,6 +67,13 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     }
 
     private void initUI() {
+        categorySpinner = (Spinner) findViewById(R.id.spinner_path_item_category);
+        titleTextView = (EditText) findViewById(R.id.edit_text_path_item_category_details);
+        busTextView = (EditText) findViewById(R.id.path_item_bus);
+
+        locationView = (LocationView) findViewById(R.id.loc_view);
+        locationView.setAutoLocation(currentPathItem.getAutoLocation());
+
         startCameraBtn = (Button) findViewById(R.id.btn_start_camera);
         startCameraBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -75,7 +91,6 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
                 savePathItem();
             }
         });
-        locationView = (LocationView) findViewById(R.id.loc_view);
     }
 
     private void deleteOldImage() {
@@ -84,6 +99,12 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     }
 
     private void savePathItem() {
+        currentPathItem.setCategory((String) categorySpinner.getSelectedItem());
+        currentPathItem.setTitle(titleTextView.getText().toString());
+        currentPathItem.setBus(busTextView.getText().toString());
+        currentPathItem.setAutoLocation(locationView.getAutoLocation());
+        currentPathItem.setRevisedLocation(locationView.getRevisedLocation());
+
         if (currentPathItem.save()) {
             showTip("保存成功");
         } else {
@@ -98,20 +119,15 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
         }
     }
 
-    private void initCurrentPathItem() {
-        try {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = JPEG_FILE_PREFIX + timeStamp;
-            File fullImage = new File(
-                    albumDir, imageFileName + JPEG_FILE_SUFFIX
-            );
-            File thumbnailImage = new File(
-                    albumDir, imageFileName + "_thumbnail_" + JPEG_FILE_SUFFIX
-            );
-            currentPathItem = new PathItem(fullImage.getAbsolutePath(), thumbnailImage.getAbsolutePath());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private PathItem createPathItem() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = JPEG_FILE_PREFIX + timeStamp;
+        File fullImage = new File(
+                albumDir, imageFileName + JPEG_FILE_SUFFIX
+        ), thumbnailImage = new File(
+                albumDir, imageFileName + "_thumbnail_" + JPEG_FILE_SUFFIX
+        );
+        return new PathItem(fullImage.getAbsolutePath(), thumbnailImage.getAbsolutePath());
     }
 
     private void startCamera() throws IOException {
@@ -145,12 +161,16 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
         return new File(currentPathItem.getFullImagePath()).exists();
     }
 
-
     @Override
     protected void onDestroy() {
         LocationFinder locationFinder = BeanContext.getInstance().getBean(LocationFinder.class);
         locationFinder.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void fetchLocationError(String errorMsg) {
+        showTip(errorMsg);
     }
 
     @Override
@@ -163,5 +183,11 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("path_item", currentPathItem);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 }

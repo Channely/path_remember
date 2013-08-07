@@ -2,6 +2,7 @@ package com.li.learn.demo05.domain;
 
 import com.li.learn.demo05.framework.BeanContext;
 
+import java.io.File;
 import java.io.Serializable;
 
 import static com.li.learn.demo05.framework.ImageUtils.decodeBitmapFromFile;
@@ -84,11 +85,17 @@ public class PathItem implements Serializable {
     }
 
     public boolean save() {
-        final boolean saveThumbnailResult = saveBitmap(getThumbnailImagePath(),
-                decodeBitmapFromFile(getFullImagePath(), 250, 250));
-        return saveThumbnailResult && getPathItemDBOperator().savePathItem(this) >= 0;
+        if (hasTakeImage()) {
+            boolean saveThumbnailResult = saveBitmap(getThumbnailImagePath(),
+                    decodeBitmapFromFile(getFullImagePath(), 250, 250));
+            return saveThumbnailResult && getPathItemDBOperator().savePathItem(this) >= 0;
+        }
+        return getPathItemDBOperator().savePathItem(this) >= 0;
     }
 
+    private boolean hasTakeImage() {
+        return new File(getFullImagePath()).exists();
+    }
 
     private PathItemDBOperator getPathItemDBOperator() {
         BeanContext beanContext = BeanContext.getInstance();

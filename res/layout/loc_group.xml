@@ -12,6 +12,7 @@
         <CheckBox android:id="@+id/checkbox_priority"
                   android:layout_width="wrap_content"
                   android:layout_height="40dp"
+                  android:checked="true"
                   android:textColor="@android:color/black"
                   android:layout_alignParentLeft="true"
                   android:text="网络优先级"/>
@@ -23,7 +24,7 @@
                   android:textColor="@android:color/black"
                   android:layout_toRightOf="@id/checkbox_priority"
                   android:layout_alignBaseline="@id/checkbox_priority"
-                  android:text="打开GPS">
+                  android:text="使用GPS">
         </CheckBox>
         <Button android:id="@+id/btn_begin_loc"
                 android:layout_alignParentRight="true"

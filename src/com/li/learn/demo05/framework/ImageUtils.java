@@ -30,8 +30,7 @@ public class ImageUtils {
         }
         options.inSampleSize = inSampleSize;
         options.inJustDecodeBounds = false;
-        Bitmap srcBitmap = BitmapFactory.decodeFile(path, options);
-        return rotateRight(path, srcBitmap);
+        return rotateRight(path, BitmapFactory.decodeFile(path, options));
     }
 
     public static Bitmap rotateRight(String path, Bitmap srcBitmap) {
