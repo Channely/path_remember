@@ -1,7 +1,6 @@
 package com.li.learn.demo05.domain;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,7 @@ import com.baidu.location.LocationClientOption;
 import com.li.learn.demo05.R;
 import com.li.learn.demo05.framework.BeanContext;
 
-public class LocationView extends LinearLayout implements ReceiveLocationCallback {
-    private static final int SCAN_INTERVAL_IN_MILLISECONDS = 3000;
+public class LocationView extends LinearLayout {
     private CheckBox priorityCheckbox;
     private CheckBox gpsCheckbox;
     private Button startLocBtn;
@@ -29,7 +27,6 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
 
     private void initLocationFinder() {
         locationFinder = BeanContext.getInstance().getBean(LocationFinder.class);
-        locationFinder.addReceiveLocationCallback(this);
     }
 
     private void initUI() {
@@ -44,15 +41,17 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
         startLocBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startLoc();
+                requestLocation();
             }
         });
     }
 
-    private void startLoc() {
-        locationFinder.stop();
+    private void requestLocation() {
         locationFinder.setLocOption(getLocOption());
-        locationFinder.start();
+        if (!locationFinder.isStarted()) {
+            locationFinder.start();
+        }
+        locationFinder.requestLocation();
     }
 
     private LocationClientOption getLocOption() {
@@ -60,34 +59,25 @@ public class LocationView extends LinearLayout implements ReceiveLocationCallbac
         option.setOpenGps(gpsCheckbox.isChecked());
         option.setCoorType("bd09ll");
         option.setServiceName("com.li.learn.location.service");
-        option.setPoiExtraInfo(true);
-        option.setScanSpan(SCAN_INTERVAL_IN_MILLISECONDS);
         option.setAddrType("all");
+        option.disableCache(true);
         if (priorityCheckbox.isChecked()) {
             option.setPriority(LocationClientOption.NetWorkFirst);
         } else {
             option.setPriority(LocationClientOption.GpsFirst);
         }
-        option.setPoiNumber(10);
-        option.disableCache(false);
+        option.setPoiNumber(5);
         return option;
     }
 
 
-    @Override
-    public void receiveLocation(final String location) {
-        Handler handler = getHandler();
-        handler.post(new Runnable() {
+    public void setAutoLocation(final String location) {
+        locAutoTextView.post(new Runnable() {
             @Override
             public void run() {
                 locAutoTextView.setText(location);
             }
         });
-    }
-
-    public void restore(String autoLocation) {
-        locationFinder.addReceiveLocationCallback(this);
-        locAutoTextView.setText(autoLocation);
     }
 
 

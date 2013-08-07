@@ -11,6 +11,7 @@ public class LocationFinder {
 
     private final LocationClient locationClient;
     private ReceiveLocationCallback receiveLocationCallback;
+    private BDLocationListener bdLocationListener;
 
     public LocationFinder(Context appContext) {
         locationClient = new LocationClient(appContext);
@@ -18,7 +19,12 @@ public class LocationFinder {
     }
 
     private void initClient() {
-        locationClient.registerLocationListener(new BDLocationListener() {
+        bdLocationListener = createLocationListener();
+        locationClient.registerLocationListener(bdLocationListener);
+    }
+
+    private BDLocationListener createLocationListener() {
+        return new BDLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation bdLocation) {
                 String addrStr = bdLocation.getAddrStr();
@@ -30,17 +36,17 @@ public class LocationFinder {
 
             @Override
             public void onReceivePoi(BDLocation bdLocation) {
-
+                Log.d("location onReceivePoi:", bdLocation.getAddrStr());
             }
-        });
+        };
     }
 
     public void addReceiveLocationCallback(ReceiveLocationCallback receiveLocationCallback) {
         this.receiveLocationCallback = receiveLocationCallback;
     }
 
-    public void stop() {
-        this.receiveLocationCallback = null;
+    public void destroy() {
+        locationClient.unRegisterLocationListener(bdLocationListener);
         if (locationClient.isStarted()) {
             locationClient.stop();
         }
@@ -54,7 +60,13 @@ public class LocationFinder {
         locationClient.start();
     }
 
+    public void requestLocation() {
+        locationClient.requestLocation();
+    }
+
     public boolean isStarted() {
         return locationClient.isStarted();
     }
+
+
 }

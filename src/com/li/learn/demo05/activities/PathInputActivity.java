@@ -13,6 +13,7 @@ import com.li.learn.demo05.R;
 import com.li.learn.demo05.domain.LocationFinder;
 import com.li.learn.demo05.domain.LocationView;
 import com.li.learn.demo05.domain.PathItem;
+import com.li.learn.demo05.domain.ReceiveLocationCallback;
 import com.li.learn.demo05.framework.BeanContext;
 
 import java.io.File;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PathInputActivity extends Activity {
+public class PathInputActivity extends Activity implements ReceiveLocationCallback {
     private static final int CODE_TAKEN_PHOTO = 1013;
     private static final String ALBUM_NAME = "demo05";
     private static final String JPEG_FILE_PREFIX = "demo05_";
@@ -38,13 +39,22 @@ public class PathInputActivity extends Activity {
         initUI();
         initAlbumDir();
         initCurrentPathItem();
+        initLocationFinder();
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        locationView.restore(currentPathItem.getAutoLocation());
+        PathItem savedPathItem = (PathItem) savedInstanceState.getSerializable("path_item");
+        if (savedPathItem != null) {
+            currentPathItem = savedPathItem;
+        }
+        locationView.setAutoLocation(currentPathItem.getAutoLocation());
+    }
 
+    private void initLocationFinder() {
+        LocationFinder locationFinder = BeanContext.getInstance().getBean(LocationFinder.class);
+        locationFinder.addReceiveLocationCallback(this);
     }
 
     private void initUI() {
@@ -139,7 +149,19 @@ public class PathInputActivity extends Activity {
     @Override
     protected void onDestroy() {
         LocationFinder locationFinder = BeanContext.getInstance().getBean(LocationFinder.class);
-        locationFinder.stop();
+        locationFinder.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void receiveLocation(String location) {
+        currentPathItem.setAutoLocation(location);
+        locationView.setAutoLocation(location);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("path_item", currentPathItem);
     }
 }
