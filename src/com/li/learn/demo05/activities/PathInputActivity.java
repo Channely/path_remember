@@ -52,7 +52,7 @@ public class PathInputActivity extends Activity {
     }
 
     private void initUI() {
-        startCameraBtn = (Button) findViewById(R.id.demo06_camera_start_btn);
+        startCameraBtn = (Button) findViewById(R.id.btn_start_camera);
         startCameraBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
@@ -64,7 +64,7 @@ public class PathInputActivity extends Activity {
                 }
             }
         });
-        saveBtn = (Button) findViewById(R.id.demo06_save_btn);
+        saveBtn = (Button) findViewById(R.id.btn_save_path);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (currentPathItem != null) {
@@ -72,8 +72,8 @@ public class PathInputActivity extends Activity {
                 }
             }
         });
-        imageView = (ImageView) findViewById(R.id.demo06_image_view);
-        whereEditText = (EditText) findViewById(R.id.demo06_where);
+        imageView = (ImageView) findViewById(R.id.image_view_path_thumbnail);
+        whereEditText = (EditText) findViewById(R.id.path_item_location);
     }
 
     private void savePathItem() {

@@ -2,13 +2,15 @@
 <resources>
     <string name="app_name">demo05</string>
     <string name="path_input_activity_name">新建地点</string>
-    <string name="label_path_item_category">类别</string>
+    <string name="label_path_item_category">类别：</string>
+    <string name="label_path_item_bus">交通：</string>
+    <string name="label_path_item_location">位置：</string>
     <string-array name="path_item_categories">
-       <item>银行</item>
-       <item>医院</item>
-       <item>餐馆</item>
-       <item>休闲</item>
-       <item>运动</item>
-       <item>其他</item>
-   </string-array>
+        <item>银行</item>
+        <item>医院</item>
+        <item>餐馆</item>
+        <item>休闲</item>
+        <item>运动</item>
+        <item>其他</item>
+    </string-array>
 </resources>
