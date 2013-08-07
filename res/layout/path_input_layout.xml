@@ -68,6 +68,10 @@
                   android:background="@drawable/edit_text_selector"/>
     </LinearLayout>
 
+    <com.li.learn.demo05.domain.LocationView android:id="@+id/loc_view"
+                                             android:layout_width="fill_parent"
+                                             android:layout_height="wrap_content"/>
+
     <Button android:id="@+id/btn_start_camera"
             android:layout_width="fill_parent" android:layout_height="44dp"
             android:text="Start Camera"

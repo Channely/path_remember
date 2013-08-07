@@ -13,10 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.li.learn.demo05.R;
-import com.li.learn.demo05.framework.ImageUtils;
+import com.li.learn.demo05.domain.LocationFinder;
 import com.li.learn.demo05.domain.PathItem;
-import com.li.learn.demo05.domain.PathItemDBOperator;
 import com.li.learn.demo05.framework.BeanContext;
+import com.li.learn.demo05.framework.ImageUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,12 +44,6 @@ public class PathInputActivity extends Activity {
         initCurrentPathItem();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        BeanContext beanContext = BeanContext.getInstance();
-        beanContext.putBean(PathItemDBOperator.class, new PathItemDBOperator(getApplicationContext()));
-    }
 
     private void initUI() {
         startCameraBtn = (Button) findViewById(R.id.btn_start_camera);
@@ -125,4 +119,10 @@ public class PathInputActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        LocationFinder locationFinder = BeanContext.getInstance().getBean(LocationFinder.class);
+        locationFinder.stop();
+        super.onDestroy();
+    }
 }
