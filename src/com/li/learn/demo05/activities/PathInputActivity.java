@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends Activity {
+public class PathInputActivity extends Activity {
     private static final int CODE_TAKEN_PHOTO = 1013;
     private static final String ALBUM_NAME = "demo05";
     private static final String JPEG_FILE_PREFIX = "demo05_";
@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.demo06_main);
+        setContentView(R.layout.path_input_layout);
         initUI();
         initAlbumDir();
         initCurrentPathItem();
