@@ -1,4 +1,4 @@
-package com.li.learn.demo05.domain;
+package com.li.learn.path.domain;
 
 import android.content.Context;
 import android.util.Log;

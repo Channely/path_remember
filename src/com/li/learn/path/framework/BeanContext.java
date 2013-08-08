@@ -1,4 +1,4 @@
-package com.li.learn.demo05.framework;
+package com.li.learn.path.framework;
 
 import java.util.HashMap;
 import java.util.Map;

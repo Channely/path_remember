@@ -1,4 +1,4 @@
-package com.li.learn.demo05.activities;
+package com.li.learn.path.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,13 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.li.learn.demo05.R;
-import com.li.learn.demo05.domain.LocationFinder;
-import com.li.learn.demo05.domain.LocationView;
-import com.li.learn.demo05.domain.PathItem;
-import com.li.learn.demo05.domain.ReceiveLocationCallback;
-import com.li.learn.demo05.framework.BeanContext;
-import com.li.learn.demo05.framework.SerialPersistence;
+import com.li.learn.path.R;
+import com.li.learn.path.domain.LocationFinder;
+import com.li.learn.path.domain.LocationView;
+import com.li.learn.path.domain.PathItem;
+import com.li.learn.path.domain.ReceiveLocationCallback;
+import com.li.learn.path.framework.BeanContext;
+import com.li.learn.path.framework.SerialPersistence;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,12 +1,12 @@
-package com.li.learn.demo05.domain;
+package com.li.learn.path.domain;
 
-import com.li.learn.demo05.framework.BeanContext;
+import com.li.learn.path.framework.BeanContext;
 
 import java.io.File;
 import java.io.Serializable;
 
-import static com.li.learn.demo05.framework.ImageUtils.decodeBitmapFromFile;
-import static com.li.learn.demo05.framework.ImageUtils.saveBitmap;
+import static com.li.learn.path.framework.ImageUtils.decodeBitmapFromFile;
+import static com.li.learn.path.framework.ImageUtils.saveBitmap;
 
 public class PathItem implements Serializable {
 

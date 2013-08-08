@@ -1,4 +1,4 @@
-package com.li.learn.demo05.domain;
+package com.li.learn.path.domain;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.baidu.location.LocationClientOption;
-import com.li.learn.demo05.R;
-import com.li.learn.demo05.framework.BeanContext;
+import com.li.learn.path.R;
+import com.li.learn.path.framework.BeanContext;
 
 public class LocationView extends LinearLayout {
     private CheckBox priorityCheckbox;
