@@ -5,12 +5,27 @@
           android:versionName="1.0">
 
     <application android:label="@string/app_name" android:name=".PathApp">
-        <activity android:name=".activities.PathInputActivity"
-                  android:label="@string/path_input_activity_name">
+        <activity android:name=".activities.MainActivity"
+                  android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data android:name="android.app.default_searchable"
+                       android:value=".activities.SearchActivity"/>
+        </activity>
+
+        <activity android:name=".activities.PathInputActivity"
+                  android:label="@string/path_input_activity_name">
+        </activity>
+
+        <activity android:name=".activities.SearchActivity"
+                  android:label="@string/search_activity_name">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable"/>
         </activity>
 
         <service android:name="com.baidu.location.f" android:enabled="true"

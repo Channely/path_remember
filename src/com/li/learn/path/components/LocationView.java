@@ -1,4 +1,4 @@
-package com.li.learn.path.domain;
+package com.li.learn.path.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.*;
 import com.baidu.location.LocationClientOption;
 import com.li.learn.path.R;
+import com.li.learn.path.domain.LocationFinder;
 import com.li.learn.path.framework.BeanContext;
 
 public class LocationView extends LinearLayout {

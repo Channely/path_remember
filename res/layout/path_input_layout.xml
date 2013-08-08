@@ -62,7 +62,7 @@
                       android:typeface="sans"
                       android:layout_marginBottom="4dp"
                       android:textColor="@color/black" android:paddingLeft="1dp"/>
-            <com.li.learn.path.domain.LocationView android:id="@+id/loc_view"
+            <com.li.learn.path.components.LocationView android:id="@+id/loc_view"
                                                      android:layout_width="fill_parent"
                                                      android:layout_height="wrap_content"/>
         </LinearLayout>

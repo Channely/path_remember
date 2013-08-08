@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">demo05</string>
+    <string name="app_name">记忆街</string>
     <string name="path_input_activity_name">新建地点</string>
     <string name="label_path_item_title">名称：</string>
     <string name="label_path_item_bus">交通：</string>
     <string name="label_path_item_location">位置：</string>
+    <string name="search_hint">点击搜索</string>
+    <string name="search_activity_name">搜索</string>
     <string-array name="path_item_categories">
         <item>银行</item>
         <item>医院</item>

@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.li.learn.path.R;
 import com.li.learn.path.domain.LocationFinder;
-import com.li.learn.path.domain.LocationView;
+import com.li.learn.path.components.LocationView;
 import com.li.learn.path.domain.PathItem;
 import com.li.learn.path.domain.ReceiveLocationCallback;
 import com.li.learn.path.framework.BeanContext;
