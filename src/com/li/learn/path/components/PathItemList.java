@@ -1,6 +1,7 @@
 package com.li.learn.path.components;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -23,9 +24,7 @@ public class PathItemList extends ListView {
     }
 
     private void initAdapter() {
-        BeanContext beanContext = BeanContext.getInstance();
-        PathItemDBOperator dbOperator = beanContext.getBean(PathItemDBOperator.class);
-        cursorAdapter = new PathListCursorAdapter(getContext(), dbOperator.getQueryCursor());
+        cursorAdapter = new PathListCursorAdapter(getContext(), getQueryCursor());
         setAdapter(cursorAdapter);
     }
 
@@ -64,5 +63,15 @@ public class PathItemList extends ListView {
         if (getFooterViewsCount() > 0) {
             removeFooterView(loadingArea);
         }
+    }
+
+    public void refresh() {
+        cursorAdapter.changeCursor(getQueryCursor());
+        cursorAdapter.notifyDataSetChanged();
+    }
+
+    private Cursor getQueryCursor() {
+        PathItemDBOperator dbOperator = BeanContext.getInstance().getBean(PathItemDBOperator.class);
+        return dbOperator.getQueryCursor();
     }
 }

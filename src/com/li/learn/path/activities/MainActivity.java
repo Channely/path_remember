@@ -1,12 +1,14 @@
 package com.li.learn.path.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.li.learn.path.R;
 import com.li.learn.path.components.PathItemList;
+import com.li.learn.path.utils.Constants;
 
 public class MainActivity extends Activity {
 
@@ -36,8 +38,19 @@ public class MainActivity extends Activity {
             case R.id.menu_search:
                 onSearchRequested();
                 return true;
+            case R.id.menu_add_path_item:
+                startActivityForResult(new Intent(this, PathInputActivity.class), Constants.CREATE_PATH_ITEM_CODE);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.CREATE_PATH_ITEM_CODE && resultCode == RESULT_OK) {
+            pathItemList.refresh();
+
         }
     }
 }

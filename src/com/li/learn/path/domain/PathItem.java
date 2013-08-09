@@ -94,6 +94,8 @@ public class PathItem implements Serializable {
         return getPathItemDBOperator().savePathItem(this) >= 0;
     }
 
+
+
     private boolean hasTakeImage() {
         return new File(getFullImagePath()).exists();
     }
@@ -111,4 +113,5 @@ public class PathItem implements Serializable {
     public void setSelectedCategoryPosition(int selectedCategoryPosition) {
         this.selectedCategoryPosition = selectedCategoryPosition;
     }
+
 }

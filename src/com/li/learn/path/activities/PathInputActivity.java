@@ -6,21 +6,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.li.learn.path.R;
-import com.li.learn.path.domain.LocationFinder;
 import com.li.learn.path.components.LocationView;
+import com.li.learn.path.domain.LocationFinder;
 import com.li.learn.path.domain.PathItem;
 import com.li.learn.path.domain.ReceiveLocationCallback;
 import com.li.learn.path.framework.BeanContext;
 import com.li.learn.path.framework.SerialPersistence;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,8 +55,8 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         SerialPersistence serialPersistence = BeanContext.getInstance().getBean(SerialPersistence.class);
         PathItem pathItem = serialPersistence.readSerialObject(HISTORY_STATES_PREFERENCE);
         if (pathItem != null) {
@@ -97,13 +97,10 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
         startCameraBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 deleteOldImage();
-                try {
-                    startCamera();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                startCamera();
             }
-        });
+        }
+        );
         saveBtn = (Button) findViewById(R.id.btn_save_path);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -114,16 +111,26 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
 
     private void deleteOldImage() {
         File fullImageFile = new File(currentPathItem.getFullImagePath());
-        fullImageFile.deleteOnExit();
+        if (fullImageFile.exists()) {
+            Log.d("delete file", "delete file:" + fullImageFile.getAbsolutePath()
+                    + ", result:" + fullImageFile.delete());
+        }
     }
 
     private void savePathItem() {
         fetchPathItemData();
-        if (currentPathItem.save()) {
-            showTip("保存成功");
-        } else {
+        boolean saveResult = currentPathItem.save();
+        handleSavePathItemResult(saveResult);
+    }
+
+    private void handleSavePathItemResult(boolean saveResult) {
+        if (!saveResult) {
             showTip("保存失败");
+            return;
         }
+        showTip("保存成功");
+        setResult(RESULT_OK);
+        onBackPressed();
     }
 
     private void fetchPathItemData() {
@@ -148,12 +155,12 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
         File fullImage = new File(
                 albumDir, imageFileName + JPEG_FILE_SUFFIX
         ), thumbnailImage = new File(
-                albumDir, imageFileName + "_thumbnail_" + JPEG_FILE_SUFFIX
+                albumDir, imageFileName + "_thumbnail" + JPEG_FILE_SUFFIX
         );
         return new PathItem(fullImage.getAbsolutePath(), thumbnailImage.getAbsolutePath());
     }
 
-    private void startCamera() throws IOException {
+    private void startCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(
                 new File(currentPathItem.getFullImagePath())));
@@ -205,6 +212,7 @@ public class PathInputActivity extends Activity implements ReceiveLocationCallba
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        fetchPathItemData();
         outState.putSerializable("path_item", currentPathItem);
     }
 
