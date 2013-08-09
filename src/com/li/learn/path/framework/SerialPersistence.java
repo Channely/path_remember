@@ -6,7 +6,6 @@ import android.util.Log;
 import java.io.*;
 
 public class SerialPersistence {
-    private static String NAME = "state_backup";
     private Context context;
 
     public SerialPersistence(Context context) {
