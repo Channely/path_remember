@@ -50,6 +50,7 @@
                       android:layout_width="fill_parent" android:layout_height="43sp"
                       android:singleLine="true" android:textSize="14sp"
                       android:inputType="text"
+                      android:hint="记下怎么到这里的。。。"
                       android:typeface="sans"
                       android:background="@drawable/edit_text_selector"/>
         </LinearLayout>

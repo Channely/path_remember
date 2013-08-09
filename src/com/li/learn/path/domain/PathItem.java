@@ -1,10 +1,14 @@
 package com.li.learn.path.domain;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import com.li.learn.path.framework.BeanContext;
 import com.li.learn.path.utils.Constants;
+import com.li.learn.path.utils.StringUtils;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Date;
 
 import static com.li.learn.path.utils.ImageUtils.decodeBitmapFromFile;
 import static com.li.learn.path.utils.ImageUtils.saveBitmap;
@@ -19,6 +23,7 @@ public class PathItem implements Serializable {
     private String bus;
     private String autoLocation;
     private String revisedLocation;
+    private Date createdAt;
 
     public PathItem() {
     }
@@ -95,6 +100,9 @@ public class PathItem implements Serializable {
         return getPathItemDBOperator().savePathItem(this) >= 0;
     }
 
+    public boolean hasThumbnailImage() {
+        return !StringUtils.isEmpty(getThumbnailImagePath()) && new File(getThumbnailImagePath()).exists();
+    }
 
     private boolean hasTakeImage() {
         return new File(getFullImagePath()).exists();
@@ -114,4 +122,15 @@ public class PathItem implements Serializable {
         this.selectedCategoryPosition = selectedCategoryPosition;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Bitmap getThumbnailImage() {
+        return BitmapFactory.decodeFile(getThumbnailImagePath());
+    }
 }

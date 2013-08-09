@@ -2,8 +2,6 @@ package com.li.learn.path.components;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +9,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.li.learn.path.R;
-import com.li.learn.path.utils.Constants;
-import com.li.learn.path.utils.StringUtils;
+import com.li.learn.path.domain.PathItem;
 
 public class PathItemView extends RelativeLayout {
     private static final int VIEW_HEIGHT = 150;
@@ -41,24 +38,17 @@ public class PathItemView extends RelativeLayout {
         revisedLocationView = (TextView) view.findViewById(R.id.path_item_revised_location);
     }
 
-    public void fillWithDataFromCursor(Cursor cursor) {
-        thumbnailImageView.setImageBitmap(createBitmap(cursor));
-        categoryView.setText(getTextFromCursor(cursor, Constants.CATEGORY_COLUMN));
-        titleView.setText(getTextFromCursor(cursor, Constants.TITLE_COLUMN));
-        busView.setText(getTextFromCursor(cursor, Constants.BUS_COLUMN));
-        autoLocationView.setText(getTextFromCursor(cursor, Constants.AUTO_LOCATION_COLUMN));
-        revisedLocationView.setText(getTextFromCursor(cursor, Constants.REVISED_LOCATION));
-    }
-
-    private Bitmap createBitmap(Cursor cursor) {
-        if (hasThumbnail(cursor)) {
-            return BitmapFactory.decodeFile(getTextFromCursor(cursor, Constants.THUMBNAIL_IMAGE_PATH_COLUMN));
+    public void fillWithPathItem(PathItem pathItem) {
+        if (!pathItem.hasThumbnailImage()) {
+            thumbnailImageView.setImageResource(R.drawable.im_thumbnail_no_image);
+        } else {
+            thumbnailImageView.setImageBitmap(pathItem.getThumbnailImage());
         }
-        return BitmapFactory.decodeResource(getResources(), R.drawable.im_thumbnail_no_image);
-    }
-
-    private boolean hasThumbnail(Cursor cursor) {
-        return !StringUtils.isEmpty(getTextFromCursor(cursor, Constants.THUMBNAIL_IMAGE_PATH_COLUMN));
+        categoryView.setText(pathItem.getCategory());
+        titleView.setText(pathItem.getTitle());
+        busView.setText(pathItem.getBus());
+        autoLocationView.setText(pathItem.getAutoLocation());
+        revisedLocationView.setText(pathItem.getRevisedLocation());
     }
 
     private String getTextFromCursor(Cursor cursor, String column) {

@@ -64,6 +64,7 @@
                   android:singleLine="true" android:textSize="14sp"
                   android:inputType="text"
                   android:typeface="sans"
+                  android:hint="输入更精确的地址"
                   android:background="@drawable/edit_text_selector"/>
     </LinearLayout>
 

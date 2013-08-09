@@ -8,7 +8,7 @@ public class Constants {
     public static final String TITLE_COLUMN = "title";
     public static final String BUS_COLUMN = "bus";
     public static final String AUTO_LOCATION_COLUMN = "auto_location";
-    public static final String REVISED_LOCATION = "revised_location";
+    public static final String REVISED_LOCATION_COLUMN = "revised_location";
     public static final String CREATED_DATE_COLUMN = "created_at";
     public static final String ID_COLUMN = "_id";
     public static final int PATH_ITEM_THUMBNAIL_IMAGE_WIDTH = 150;
