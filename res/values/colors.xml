@@ -4,4 +4,7 @@
     <color name="black">#000000</color>
     <color name="edit_text_border_activated">#8c8c8c</color>
     <color name="edit_text_border">#9e9e9e</color>
+    <color name="normal_text">#2e2e2e</color>
+    <color name="path_item_view_divider_bottom">#99ffffff</color>
+    <color name="path_item_view_divider_top">#bfbfbf</color>
 </resources>

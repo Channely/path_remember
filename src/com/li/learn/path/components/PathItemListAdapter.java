@@ -34,10 +34,8 @@ public class PathItemListAdapter extends BaseAdapter {
         PathItemView listItem;
         if (convertView == null) {
             listItem = new PathItemView(context);
-            listItem.setText((String) getItem(position));
         } else {
             listItem = (PathItemView) convertView;
-            listItem.setText((String) getItem(position));
         }
         return listItem;
     }

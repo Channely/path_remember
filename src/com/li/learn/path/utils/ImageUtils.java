@@ -1,4 +1,4 @@
-package com.li.learn.path.framework;
+package com.li.learn.path.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -2,10 +2,71 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10px">
+                android:layout_height="match_parent"
+                android:padding="6dp">
 
-    <TextView android:id="@+id/text" android:layout_width="wrap_content"
-              android:layout_height="wrap_content" android:layout_centerInParent="true"/>
+    <ImageView android:id="@+id/path_item_thumbnail_image"
+               android:layout_height="110dp" android:layout_width="140dp"
+               android:background="@drawable/path_item_view_image_background"
+               android:scaleType="fitXY"
+               android:layout_alignParentLeft="true"/>
+
+    <RelativeLayout android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/path_item_thumbnail_image"
+                    android:padding="5dp">
+        <com.li.learn.path.components.PathItemTextView android:id="@+id/path_item_category"
+                                                       android:layout_width="wrap_content"
+                                                       android:layout_height="wrap_content"
+                                                       android:textSize="11sp"
+                                                       android:layout_alignParentRight="true"
+                                                       android:layout_alignParentTop="true"
+                                                       android:layout_marginBottom="2dp"
+                                                       android:singleLine="true"/>
+
+        <com.li.learn.path.components.PathItemTextView android:id="@+id/path_item_title"
+                                                       android:layout_width="fill_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:textSize="11sp"
+                                                       android:ellipsize="end"
+                                                       android:layout_alignParentLeft="true"
+                                                       android:layout_alignParentTop="true"
+                                                       android:layout_toLeftOf="@id/path_item_category"
+                                                       android:layout_alignBaseline="@id/path_item_category"
+                                                       android:layout_marginBottom="2dp"
+                                                       android:singleLine="true"/>
+
+        <com.li.learn.path.components.PathItemTextView android:id="@+id/path_item_bus"
+                                                       android:layout_width="fill_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:ellipsize="end"
+                                                       android:textSize="11sp"
+                                                       android:layout_alignParentLeft="true"
+                                                       android:layout_below="@id/path_item_title"
+                                                       android:layout_marginBottom="2dp"
+                                                       android:singleLine="true"/>
+
+        <com.li.learn.path.components.PathItemTextView android:id="@+id/path_item_auto_location"
+                                                       android:layout_width="fill_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:ellipsize="end"
+                                                       android:textSize="11sp"
+                                                       android:layout_alignParentLeft="true"
+                                                       android:layout_below="@id/path_item_bus"
+                                                       android:layout_marginBottom="2dp"
+                                                       android:singleLine="true"/>
+
+        <com.li.learn.path.components.PathItemTextView android:id="@+id/path_item_revised_location"
+                                                       android:layout_width="fill_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:ellipsize="end"
+                                                       android:textSize="11sp"
+                                                       android:text="往北走100米"
+                                                       android:layout_alignParentLeft="true"
+                                                       android:layout_below="@id/path_item_auto_location"
+                                                       android:singleLine="true"/>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

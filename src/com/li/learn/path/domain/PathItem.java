@@ -1,12 +1,13 @@
 package com.li.learn.path.domain;
 
 import com.li.learn.path.framework.BeanContext;
+import com.li.learn.path.utils.Constants;
 
 import java.io.File;
 import java.io.Serializable;
 
-import static com.li.learn.path.framework.ImageUtils.decodeBitmapFromFile;
-import static com.li.learn.path.framework.ImageUtils.saveBitmap;
+import static com.li.learn.path.utils.ImageUtils.decodeBitmapFromFile;
+import static com.li.learn.path.utils.ImageUtils.saveBitmap;
 
 public class PathItem implements Serializable {
 
@@ -88,12 +89,11 @@ public class PathItem implements Serializable {
     public boolean save() {
         if (hasTakeImage()) {
             boolean saveThumbnailResult = saveBitmap(getThumbnailImagePath(),
-                    decodeBitmapFromFile(getFullImagePath(), 250, 250));
+                    decodeBitmapFromFile(getFullImagePath(), Constants.PATH_ITEM_THUMBNAIL_IMAGE_WIDTH, Constants.PATH_ITEM_THUMBNAIL_IMAGE_HEIGHT));
             return saveThumbnailResult && getPathItemDBOperator().savePathItem(this) >= 0;
         }
         return getPathItemDBOperator().savePathItem(this) >= 0;
     }
-
 
 
     private boolean hasTakeImage() {
