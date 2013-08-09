@@ -3,6 +3,7 @@ package com.li.learn.path.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.media.ExifInterface;
 import android.util.Log;
 
@@ -69,5 +70,9 @@ public class ImageUtils {
             Log.e("Save Bitmap", e.toString());
         }
         return false;
+    }
+
+    public static Bitmap decodeBitmapFromFile(String imagePath, Point point) {
+        return decodeBitmapFromFile(imagePath, point.x, point.y);
     }
 }

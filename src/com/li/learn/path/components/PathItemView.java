@@ -39,7 +39,7 @@ public class PathItemView extends RelativeLayout {
     }
 
     public void fillWithPathItem(PathItem pathItem) {
-        if (!pathItem.hasThumbnailImage()) {
+        if (!pathItem.hasTakenImage()) {
             thumbnailImageView.setImageResource(R.drawable.im_thumbnail_no_image);
         } else {
             thumbnailImageView.setImageBitmap(pathItem.getThumbnailImage());

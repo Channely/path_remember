@@ -92,7 +92,7 @@ public class PathItem implements Serializable {
     }
 
     public boolean save() {
-        if (hasTakeImage()) {
+        if (hasTakenImage()) {
             boolean saveThumbnailResult = saveBitmap(getThumbnailImagePath(),
                     decodeBitmapFromFile(getFullImagePath(), Constants.PATH_ITEM_THUMBNAIL_IMAGE_WIDTH, Constants.PATH_ITEM_THUMBNAIL_IMAGE_HEIGHT));
             return saveThumbnailResult && getPathItemDBOperator().savePathItem(this) >= 0;
@@ -100,13 +100,10 @@ public class PathItem implements Serializable {
         return getPathItemDBOperator().savePathItem(this) >= 0;
     }
 
-    public boolean hasThumbnailImage() {
-        return !StringUtils.isEmpty(getThumbnailImagePath()) && new File(getThumbnailImagePath()).exists();
+    public boolean hasTakenImage() {
+        return !StringUtils.isEmpty(getFullImagePath()) && new File(getFullImagePath()).exists();
     }
 
-    private boolean hasTakeImage() {
-        return new File(getFullImagePath()).exists();
-    }
 
     private PathItemDBOperator getPathItemDBOperator() {
         BeanContext beanContext = BeanContext.getInstance();

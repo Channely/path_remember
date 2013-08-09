@@ -23,7 +23,7 @@ public class PathListCursorAdapter extends CursorAdapter {
         return view;
     }
 
-    private PathItem createPathItemFromCursor(Cursor cursor) {
+    protected PathItem createPathItemFromCursor(Cursor cursor) {
         PathItem pathItem = new PathItem();
         pathItem.setCategory(getTextFromCursor(cursor, Constants.CATEGORY_COLUMN));
         pathItem.setTitle(getTextFromCursor(cursor, Constants.TITLE_COLUMN));

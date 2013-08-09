@@ -3,16 +3,21 @@ package com.li.learn.path.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.*;
 import com.li.learn.path.R;
+import com.li.learn.path.animations.ZoomViewAnimation;
+import com.li.learn.path.components.PathItemDetailsView;
 import com.li.learn.path.components.PathItemList;
+import com.li.learn.path.components.PathItemSelectedListener;
+import com.li.learn.path.domain.PathItem;
 import com.li.learn.path.utils.Constants;
 
 public class MainActivity extends Activity {
 
     private PathItemList pathItemList;
+    private PathItemDetailsView pathItemDetailsView;
+
+    private ZoomViewAnimation zoomViewAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +26,30 @@ public class MainActivity extends Activity {
         initUI();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        initAnimation();
+    }
+
+
+    private void initAnimation() {
+        zoomViewAnimation = new ZoomViewAnimation(pathItemDetailsView, 300);
+    }
+
     private void initUI() {
         pathItemList = (PathItemList) findViewById(R.id.path_item_list);
+        pathItemDetailsView = (PathItemDetailsView) findViewById(R.id.path_item_details);
+        pathItemList.registerPathItemSelectedListener(new PathItemSelectedListener() {
+
+            @Override
+            public void onSelect(PathItem pathItem) {
+                if (!pathItem.hasTakenImage()) return;
+                pathItemDetailsView.setImage(pathItem.getFullImagePath());
+                zoomViewAnimation.toFullScreen();
+            }
+        });
+
     }
 
     @Override
@@ -52,5 +79,9 @@ public class MainActivity extends Activity {
             pathItemList.refresh();
 
         }
+    }
+
+    private View getRootView() {
+        return ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
     }
 }
