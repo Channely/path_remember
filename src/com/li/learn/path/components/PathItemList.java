@@ -6,17 +6,27 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.li.learn.path.R;
+import com.li.learn.path.domain.PathItemDBOperator;
+import com.li.learn.path.framework.BeanContext;
 import com.li.learn.path.tasks.FetchDataTask;
 
 public class PathItemList extends ListView {
 
     private LoadingArea loadingArea;
     private boolean isGettingMore;
-    private PathItemListAdapter pathItemListAdapter;
+    private PathListCursorAdapter cursorAdapter;
 
     public PathItemList(Context context, AttributeSet attrs) {
         super(context, attrs);
         initUI();
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        BeanContext beanContext = BeanContext.getInstance();
+        PathItemDBOperator dbOperator = beanContext.getBean(PathItemDBOperator.class);
+        cursorAdapter = new PathListCursorAdapter(getContext(), dbOperator.getQueryCursor());
+        setAdapter(cursorAdapter);
     }
 
     private void initUI() {
@@ -42,7 +52,6 @@ public class PathItemList extends ListView {
     }
 
     public void appendData(String[] data) {
-        pathItemListAdapter.appendData(data);
         hideLoadingMore();
         setNotGettingMore();
     }
