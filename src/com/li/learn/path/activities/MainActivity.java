@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
             @Override
             public void onSelect(PathItem pathItem) {
                 if (!pathItem.hasTakenImage()) return;
-                pathItemDetailsView.setImage(pathItem.getFullImagePath());
+                pathItemDetailsView.fillDate(pathItem);
                 zoomViewAnimation.toFullScreen();
             }
         });
@@ -77,7 +77,6 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.CREATE_PATH_ITEM_CODE && resultCode == RESULT_OK) {
             pathItemList.refresh();
-
         }
     }
 

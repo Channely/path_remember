@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.li.learn.path.R;
+import com.li.learn.path.domain.PathItem;
 import com.li.learn.path.framework.BeanContext;
 import com.li.learn.path.utils.DisplayUtils;
 import com.li.learn.path.utils.ImageUtils;
@@ -15,6 +17,9 @@ import com.li.learn.path.utils.ImageUtils;
 public class PathItemDetailsView extends RelativeLayout {
 
     private ImageView imageView;
+    private TextView autoLocationView;
+    private TextView titleView;
+    private TextView revisedLocationView;
 
     public PathItemDetailsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -26,13 +31,22 @@ public class PathItemDetailsView extends RelativeLayout {
         View view = layoutInflater.inflate(R.layout.path_item_details_view, null);
         addView(view);
         imageView = (ImageView) findViewById(R.id.path_item_details_view_image);
+        titleView = (TextView) findViewById(R.id.path_item_details_title);
+        autoLocationView = (TextView) findViewById(R.id.path_item_details_auto_location);
+        revisedLocationView = (TextView) findViewById(R.id.path_item_details_revised_location);
     }
 
-    public void setImage(String imagePath) {
+    public void fillDate(PathItem pathItem) {
+        setImage(pathItem.getFullImagePath());
+        titleView.setText(pathItem.getTitle());
+        autoLocationView.setText(pathItem.getAutoLocation());
+        revisedLocationView.setText(pathItem.getRevisedLocation());
+    }
+
+    private void setImage(String imagePath) {
         Point point = new Point();
         (BeanContext.getInstance().getBean(DisplayUtils.class)).getScreenSize(point);
         imageView.setImageBitmap(ImageUtils.decodeBitmapFromFile(
                 imagePath, point));
-
     }
 }

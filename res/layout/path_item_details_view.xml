@@ -5,10 +5,36 @@
                 android:background="@color/black"
                 android:layout_height="match_parent">
 
-    <ImageView  android:id="@+id/path_item_details_view_image"
-                android:layout_height="match_parent"
+    <ImageView android:id="@+id/path_item_details_view_image"
+               android:layout_height="match_parent"
                android:layout_width="match_parent"
                android:layout_centerInParent="true"/>
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:orientation="vertical">
+        <TextView android:id="@+id/path_item_details_title"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:layout_marginBottom="4dp"
+                  android:textSize="12sp"
+                  android:textColor="@color/white"/>
 
+        <TextView android:id="@+id/path_item_details_auto_location"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:layout_marginBottom="4dp"
+                  android:textSize="12sp"
+                  android:textColor="@color/white"/>
+        <TextView android:id="@+id/path_item_details_revised_location"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:textSize="12sp"
+                  android:textColor="@color/white"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
